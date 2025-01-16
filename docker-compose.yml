@@ -1,0 +1,24 @@
+services:
+  identity_broker:
+    container_name: identity_broker
+    image: quay.io/keycloak/keycloak:26.1
+    command: ["start-dev"]
+    ports:
+      - 8081:8080
+    environment:
+      - KC_BOOTSTRAP_ADMIN_USERNAME=admin
+      - KC_BOOTSTRAP_ADMIN_PASSWORD=secret
+
+  service_provider:
+    container_name: service_provider
+    build:
+      context: ./serviceProvider
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8000
+    volumes:
+      - ./serviceProvider:/app
+
+networks:
+  keycloakNet:
+    driver: bridge
