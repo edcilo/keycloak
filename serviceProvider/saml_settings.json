@@ -4,24 +4,24 @@
     "sp": {
         "entityId": "fastapi-saml-client",
         "assertionConsumerService": {
-            "url": "http://localhost:8080/saml/acs",
+            "url": "http://service-provider.docker.localhost:9000/saml/acs",
             "binding": "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
         },
         "singleLogoutService": {
-            "url": "http://localhost:8080/saml/sls",
+            "url": "http://service-provider.docker.localhost:9000/saml/sls",
             "binding": "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
         }
     },
     "idp": {
-        "entityId": "http://localhost:8081/realms/fastapi",
+        "entityId": "http://identity-broker.docker.localhost:9000/realms/fastapi",
         "singleSignOnService": {
-            "url": "http://localhost:8081/realms/fastapi/protocol/saml",
+            "url": "http://identity-broker.docker.localhost:9000/realms/fastapi/protocol/saml",
             "binding": "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
         },
         "singleLogoutService": {
-            "url": "http://localhost:8081/realms/fastapi/protocol/saml",
+            "url": "http://identity-broker.docker.localhost:9000/realms/fastapi/protocol/saml",
             "binding": "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
         },
-        "x509cert": "MIICnTCCAYUCBgGUb+UzDTANBgkqhkiG9w0BAQsFADASMRAwDgYDVQQDDAdmYXN0YXBpMB4XDTI1MDExNjE2MTI1OVoXDTM1MDExNjE2MTQzOVowEjEQMA4GA1UEAwwHZmFzdGFwaTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBALy5lg1qYir5bdWB+mVUbZnvVAYWyMwyQItL4q53cieAjqZph2+et549QzoRQT74ngq+cZ0H5BeJZc6OehMLpoQpTNzhr83qf3pdJBGxTOAf1ulnBWOp9axOQP8dFvBOqO6OqFP+6oXJBD1MkxU3Ec1hn6wwDvuqlq1yCJgufIM5pwQTKf6IaeebvtJYYFsNkKAn9o/5jkscZ0jeQg07EFyev+HyIoOYnvgMvo7tvGACfutP1YORJ/tOj7DbCF7lFEyLvEbBF5L1WAfvx1Ruu61wuACNqL9oi9jRBoer8yOoIbqW7WELd0NMw4nUU/p+xOR7I1rC/fgH1cOu6HAv258CAwEAATANBgkqhkiG9w0BAQsFAAOCAQEAiv+SIyT6m8TW8VHqTFlDuvlHMrfjLcgLdh4K+vO3B2Q4xtj16dzLwzEJxkPYc8AcPDKW4EnQIrzsXvOrKALpS+YJcHrBWat+UpoqnwYTkQJC9FNfj1TAj31yOv3+cubgNs7cQb0FJUAc52aHO65yA1B1aaBV8cgfj8V3h9Kyefo5FT+ofL39Wn7qB8NkHBr1r9qrbGnu6nFz+sw/mK//+i7ll1wvUohI1kXGgubnnOtLBVci6CVTSDMru3mjICQIXUAnGQ1LArCv0quwi0ceJTccM1ORfyKK605fdzxHHTHbmX6LLN7+X5vvJVlbj2EDmqzuxuH0iBcj0zR07PgUDQ=="
+        "x509cert": "MIICnTCCAYUCBgGUhYZ1LTANBgkqhkiG9w0BAQsFADASMRAwDgYDVQQDDAdmYXN0YXBpMB4XDTI1MDEyMDIxMDEwOVoXDTM1MDEyMDIxMDI0OVowEjEQMA4GA1UEAwwHZmFzdGFwaTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAK++NY8OOouce4rIuCnmL5SQp8oNK3GjcmvNTHg66TBsGH5VGrTj6fNXeV7AMaLZvPia+HGG1dXHotGBhJtfH+fLuoraLtKiMOYCO6KIHHjJSOctzAOXan1uN7yDv1N0DIIqUKwgwpOcbR8OI2sBoo0aATeHOAbp5I+IBz6UpuKs7+TxZNNfTXXNBbSAfb59FeNnHi5oV2KTJdgLKkoyfacOLL8HC5XxhM0A/ikdofs7VmGjBf15I8SK6SHor/6DVbBCnuTZHBJ+/F/8QkeDMhs+uLugb1HshT9tOAu9T67flyQNjRVuiD1p7muboQafqz5mdOr5bz9DqDXfwS1z+HECAwEAATANBgkqhkiG9w0BAQsFAAOCAQEAPecgGJS3TOkZkz8FoPhzu3SMQ3dxyYTN6cxRVV1y683/Aw+kNMXRCAGUscC9TRFXrTbHoVCB29Gxx3fIuCShlPJMMr6XED9/aXPDiLd9LXs5nHa04PtNebFzRFRZN4uDXiXHQCdsncU7cpKrvdk/PQqJT7rVTShDytL0avs/iTcf+DDzxwf6q1eCqVoPXns3MUDQ2xn/w3OQiKuMlSs2xvPko8zt7QT/7xY+pAOz/bvDAma3G/QaU8alomqnlPzBhqBCsLxP5nsf1qa+tflxq65sktgCrMutuviDz205p/XmG+YVlfxt90BctUGBFBQDkU8y+2x8gFu7Y0GbehwpEg=="
     }
 }

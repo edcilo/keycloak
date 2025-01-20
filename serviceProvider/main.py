@@ -30,6 +30,7 @@ async def init_saml_auth(request: Request):
 # saml routes
 @app.get("/metadata")
 async def metadata(request: Request):
+    print(">>>>>> edc /metadata")
     saml_auth = await init_saml_auth(request)
     settings = saml_auth.get_settings()
     metadata = settings.get_sp_metadata()
@@ -40,7 +41,8 @@ async def metadata(request: Request):
 
 @app.post("/saml/acs")
 async def saml_acs(request: Request):
-    print(request)
+    print(">>>>>> edc /saml/acs")
+    print("?????? request", request)
     saml_auth = await init_saml_auth(request)
     saml_auth.process_response()
     errors = saml_auth.get_errors()
@@ -62,6 +64,7 @@ async def saml_sls(request: Request):
 
 @app.get("/saml/login")
 async def saml_login(request: Request):
+    print(">>>>>> edc /saml/login")
     saml_auth = await init_saml_auth(request)
     return {
         "login-url": saml_auth.login()
