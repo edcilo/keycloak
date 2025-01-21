@@ -4,11 +4,11 @@
     "sp": {
         "entityId": "fastapi-saml-client",
         "assertionConsumerService": {
-            "url": "http://service-provider.docker.localhost:9000/saml/acs",
+            "url": "http://127.0.0.1:8000/saml/acs",
             "binding": "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
         },
         "singleLogoutService": {
-            "url": "http://service-provider.docker.localhost:9000/saml/sls",
+            "url": "http://127.0.0.1:8000/saml/sls",
             "binding": "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
         }
     },

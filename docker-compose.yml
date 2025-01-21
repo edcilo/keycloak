@@ -31,6 +31,10 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.service_provider.rule=Host(`service-provider.docker.localhost`)"
+      - "traefik.http.services.service-provider.loadbalancer.server.port=8080"
+      # - "traefik.http.middlewares.sp-headers.headers.customrequestheaders.X-Forwarded-Proto=https"
+      - "traefik.http.middlewares.sp-headers.headers.customrequestheaders.Host=service-provider.docker.localhost"
+      - "traefik.http.routers.service_provider.middlewares=sp-headers"
     # network_mode: host
     networks:
       - keycloakNet

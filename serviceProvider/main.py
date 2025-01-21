@@ -1,5 +1,6 @@
 import json
 from fastapi import FastAPI, Request
+from starlette.responses import RedirectResponse
 from onelogin.saml2.auth import OneLogin_Saml2_Auth
 from onelogin.saml2.utils import OneLogin_Saml2_Utils
 
@@ -7,15 +8,11 @@ app = FastAPI()
 
 async def prepare_request_data(request: Request):
     url_scheme = request.scope.get("scheme", "http")
-    host = request.client.host
-    port = request.scope.get("server")[1]
-    script_name = request.url.path
-
     return {
         "https": "on" if url_scheme == "https" else "off",
-        "http_host": host,
-        "server_port": str(port),
-        "script_name": script_name,
+        "http_host": request.client.host,
+        "server_port": request.url.port,
+        "script_name": request.url.path,
         "get_data": request.query_params,
         "post_data": await request.form()
     }
@@ -41,17 +38,20 @@ async def metadata(request: Request):
 
 @app.post("/saml/acs")
 async def saml_acs(request: Request):
-    print(">>>>>> edc /saml/acs")
-    print("?????? request", request)
     saml_auth = await init_saml_auth(request)
-    saml_auth.process_response()
+    try:
+        saml_auth.process_response()
+    except Exception as e:
+        print(">>>>>> error", e)
+        print("Raw SAML Response:", saml_auth.get_last_response_xml())
+        return {"message": "Error when processing SAML Response: %s" % str(e)}
     errors = saml_auth.get_errors()
     if len(errors) > 0:
-        raise ValueError('Error when processing SAML Response: %s' % (', '.join(errors)))
-    if saml_auth.is_authenticated():
-        user_data = saml_auth.get_attributes()
-        return {"message": "User authenticated", "user_data": user_data}
-    return {"message": "User not authenticated"}
+        raise ValueError('Error when processing SAML Response: %s %s' % (', '.join(errors), saml_auth.get_last_error_reason()))
+    if not saml_auth.is_authenticated():
+        return {"message": "User not authenticated"}
+    user_data = saml_auth.get_attributes()
+    return {"message": "User authenticated", "user_data": user_data}
 
 @app.post("/saml/sls")
 async def saml_sls(request: Request):
@@ -66,9 +66,12 @@ async def saml_sls(request: Request):
 async def saml_login(request: Request):
     print(">>>>>> edc /saml/login")
     saml_auth = await init_saml_auth(request)
-    return {
-        "login-url": saml_auth.login()
-    }
+    authLogin = saml_auth.login()
+    print(">>>>>> auth login url", authLogin)
+    return RedirectResponse(authLogin)
+    # return {
+    #     "login-url": saml_auth.login()
+    # }
 
 @app.get("/saml/logout")
 async def saml_logout(request: Request):
